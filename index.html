@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Emotion Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <h1>Text Emotion Prediction</h1>
+    
+    <form method="POST">
+        <label for="text_input">Enter Text:</label>
+        <input type="text" id="text_input" name="text_input" required><br><br>
+
+        <label>Choose Classification Method:</label><br>
+        <div style="display: flex; justify-content: space-between; width: 100%; max-width: 500px;">
+            <div>
+                <input type="radio" id="nearest_neighbor" name="classification_method" value="KNN" required>
+                <label for="nearest_neighbor">KNN</label>
+            </div>
+            <div>
+                <input type="radio" id="naive_bayes" name="classification_method" value="Naive Bayes">
+                <label for="naive_bayes">Naive Bayes</label>
+            </div>
+            <div>
+                <input type="radio" id="decision_tree" name="classification_method" value="Decision Tree">
+                <label for="decision_tree">Decision Tree</label>
+            </div>
+            <div>
+                <input type="radio" id="svm" name="classification_method" value="SVM">
+                <label for="svm">SVM</label>
+            </div>
+        </div>
+
+        <input type="submit" value="Predict" style="margin-top: 20px;">
+    </form>
+
+    {% if prediction is not none %}
+    <div style="margin-top: 30px;">
+        <h2>Input Text:</h2>
+        <p>{{ input_text }}</p>
+
+        <h2>Selected Classifier:</h2>
+        <p>{{ model_name }}</p>
+
+        <h2>Predicted Emotion:</h2>
+        <p>{{ prediction }}</p>
+    </div>
+    {% endif %}
+
+    <h3>Model Performance:</h3>
+    <ul>
+        {% for model, acc in accuracy_results.items() %}
+        <li>{{ model }}: {{ acc }}</li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>
